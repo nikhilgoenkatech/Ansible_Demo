@@ -3,7 +3,7 @@
   tasks:
   - name: install vim
     yum:
-      name: vim9
+      name: vim
       state: present
       update_cache: true
     become: true
