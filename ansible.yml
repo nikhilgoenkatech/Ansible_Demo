@@ -1,11 +1,9 @@
 - name: Trying
   hosts: all
   tasks:
-
-
   - name: install vim
     yum:
-      name: vim
+      name: vim9
       state: present
       update_cache: true
     become: true
