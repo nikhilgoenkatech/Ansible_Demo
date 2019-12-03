@@ -2,6 +2,6 @@
   hosts: all
   tasks:
     - name: oneagent status
-      service:
-        name: oneagent
-        state: stopped
+      yum:
+        name: httpd
+        state: latest
