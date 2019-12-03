@@ -4,6 +4,5 @@
 
 
   - name: start httpd
-    service:
-         name: oneagent
-         state: stopped
+    command: yum install httpd -y
+    notify: httpd installed
