@@ -9,4 +9,4 @@
   - name: start httpd
     service:
          name: oneagent
-         state: stopp
+         state: restarted
