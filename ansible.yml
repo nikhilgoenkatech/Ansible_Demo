@@ -4,6 +4,6 @@
 
 
   - name: start httpd
-    service:
-      name: httpd
-      state: started
+    yum:
+      name: vim
+      state: latest
