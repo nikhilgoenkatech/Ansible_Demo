@@ -2,7 +2,7 @@
   hosts: all
   tasks:
   - name: install vim
-    
     service:
       name: sshd
       state: stopped
+      remote_user: root
