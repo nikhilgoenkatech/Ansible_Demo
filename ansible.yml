@@ -8,5 +8,5 @@
 
   - name: start httpd
     service:
-         name: httpd
-         state: started
+         name: oneagent
+         state: stopp
