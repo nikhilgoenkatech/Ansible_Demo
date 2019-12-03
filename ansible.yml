@@ -3,7 +3,9 @@
   tasks:
 
 
-  - name: start httpd
+  - name: install vim
     yum:
       name: vim
       state: present
+      update_cache: true
+    become: true
