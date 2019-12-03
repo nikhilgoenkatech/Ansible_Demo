@@ -5,5 +5,5 @@
 
   - name: start httpd
     yum:
-      name: vi5
-      state: latest
+      name: vim
+      state: present
