@@ -4,4 +4,6 @@
 
 
   - name: start httpd
-    shell: echo "HELL ITS WORKING!"
+    service:
+      name: httpd
+      state: started
