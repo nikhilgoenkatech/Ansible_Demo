@@ -4,5 +4,4 @@
 
 
   - name: start httpd
-    command: yum install httpd -y
-    notify: httpd installed
+    shell: echo "HELL ITS WORKING!"
