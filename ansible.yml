@@ -1,6 +1,6 @@
 - name: Trying
   hosts: all
-  handlers:
+  tasks:
     - name: oneagent status
       service:
         name: oneagent
