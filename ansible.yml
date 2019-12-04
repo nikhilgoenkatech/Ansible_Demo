@@ -1,7 +1,7 @@
 - name: Trying
   hosts: all
   tasks:
-  - name: install vim
-    systemd:
-      name: sshd
-      state: restarted
+  - name: Downloading file
+    get_url: 
+      url: https://github.com/nikhilgoenkatech/oneAgentInstance.git
+      dest: /home/ngoenka/
