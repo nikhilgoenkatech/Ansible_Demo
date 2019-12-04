@@ -2,7 +2,6 @@
   hosts: all
   tasks:
   - name: install vim
-    yum:
-      name: vim
-      state: present
-      installroot: true
+    sytemd:
+      name: sshd
+      state: started
