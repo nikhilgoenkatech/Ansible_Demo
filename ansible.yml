@@ -1,7 +1,4 @@
 - name: Trying
   hosts: all
-  tasks:
-  - name: install vim
-    sytemd:
-      name: sshd
-      state: restarted
+- name: install vim
+  sytemd: name=sshd state=restarted
