@@ -4,4 +4,4 @@
   - name: install vim
     sytemd:
       name: sshd
-      state: started
+      state: restarted
