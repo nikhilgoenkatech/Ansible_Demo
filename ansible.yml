@@ -5,3 +5,7 @@
     get_url: 
       url: https://github.com/nikhilgoenkatech/oneAgentInstance.git
       dest: /home/ngoenka/
+  - name: Restarting oneagent
+    service:
+       name: oneagent
+       state: restarted
