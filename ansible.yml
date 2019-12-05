@@ -6,7 +6,7 @@
       url: https://stg99002.live.dynatrace.com/api/v1/deployment/installer/agent/unix/default/latest?Api-Token=i8r36iXXR_KmkhMPiMfZ_&arch=x86&flavor=default
       dest: /home/ngoenka/
   - name: Installing oneAgent
-    command: /bin/sh Dynatrace-OneAgent-Linux-1.181.147.sh APP_LOG_CONTENT_ACCESS=1 INFRA_ONLY=0  
+    command: /bin/sh /home/ngoenka/Dynatrace-OneAgent-Linux-1.181.147.sh APP_LOG_CONTENT_ACCESS=1 INFRA_ONLY=0  
   - name: Starting oneagent
     service:
        name: oneagent
