@@ -3,7 +3,7 @@
   tasks:
   - name: Downloading file
     get_url: 
-      url: https://github.com/nikhilgoenkatech/oneAgentInstance.git
+      url: https://stg99002.live.dynatrace.com/api/v1/deployment/installer/agent/unix/default/latest?Api-Token=i8r36iXXR_KmkhMPiMfZ_&arch=x86&flavor=default
       dest: /home/ngoenka/
   - name: Restarting oneagent
     service:
