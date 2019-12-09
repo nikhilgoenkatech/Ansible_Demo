@@ -13,5 +13,5 @@
   tasks:
     - name: push comment to dynatrace
       debug:
-       msg: Problem ID is {{ProblemID}}
+       msg: "{{ProblemID}}"
       
