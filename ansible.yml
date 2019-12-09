@@ -15,7 +15,7 @@
   tasks:
     - name: push comment to dynatrace
       uri:
-        url: "{{dtcommentapiurl}}"
+        url: "{{tenanturl}}/api/v1/problem/details/{{ProblemID}}/comments?Api-Token={{apitoken}}"
         method: POST
         body_format: json
         body: "{ \"comment\": \"Remediation playbook started.\", \"user\": \"{{commentuser}}\", \"context\": \"Ansible Tower\" }"
