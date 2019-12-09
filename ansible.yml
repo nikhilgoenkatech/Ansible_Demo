@@ -2,13 +2,13 @@
 - name: Trying
   hosts: all
   vars:
-    #tenanturl: https://s.live.dynatrace.com
-    #apitoken: xxx
+    tenanturl: https://stg99002.live.dynatrace.com
+    apitoken:  Ur8ti8_9SLWYpfXSTDNgH
     now: "{{ ansible_date_time.epoch|int * 1000}}"
     past: "{{ now|int - 86400000 }}" # 1h = 3600000   24h = 86400000
-    #commentuser: "Ansible Playbook"
-    #dtcommentapiurl: "{{tenanturl}}/api/v1/problem/details/{{pid}}/comments?Api-Token={{apitoken}}"
-    #dtdeploymentapiurl: "{{tenanturl}}/api/v1/events/?eventType=CUSTOM_DEPLOYMENT&from={{past}}&to={{now}}&Api-Token={{apitoken}}"
+    commentuser: "Ansible Playbook"
+    dtcommentapiurl: "{{tenanturl}}/api/v1/problem/details/{{pid}}/comments?Api-Token={{apitoken}}"
+    dtdeploymentapiurl: "{{tenanturl}}/api/v1/events/?eventType=CUSTOM_DEPLOYMENT&from={{past}}&to={{now}}&Api-Token={{apitoken}}"
     payload:
       PID: "{{pid}}"
       ImpactedEntities: "{{impactedEntities}}"
