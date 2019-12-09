@@ -7,10 +7,11 @@
     now: "{{ ansible_date_time.epoch|int * 1000}}"
     past: "{{ now|int - 86400000 }}" # 1h = 3600000   24h = 86400000
     commentuser: "Ansible Playbook"
-    PID: "{{ProblemID}}"
-    ImpactedEntities: "{{impactedEntities}}"
+    payload:
+     PID: "{{ProblemID}}"
+     ImpactedEntities: "{{impactedEntities}}"
   tasks:
     - name: push comment to dynatrace
       debug:
-       msg: Problem ID is {{ProblemID}}
+       msg: Problem ID is {{PID}}
       
