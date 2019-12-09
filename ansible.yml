@@ -18,21 +18,4 @@
         url: "{{tenanturl}}/api/v1/problem/details/{{ProblemID}}/comments?Api-Token={{apitoken}}"
         method: POST
         body_format: json
-        body: "{ \"comment\": \"Remediation playbook started.\", \"user\": \"{{commentuser}}\", \"context\": \"Ansible Tower\" }"
-      
-    - name: fetch custom deployment events
-      uri:
-        url: "{{dtdeploymentapiurl}}"
-        return_content: yes
-      with_items: "{{ impactedEntities }}"
-      when: state == "OPEN"
-      register: customproperties
-      ignore_errors: no
-      #State: "{{state}}"
-
-    - name: parse deployment events
-      when: state == "OPEN"
-      set_fact:
-        deployment_events: "{{item.json.events}}"
-      with_items: "{{ customproperties.results }}"
-      register: app_result
+        body: "{ \"comment\": \"Remediation playbook started.\", \"user\": \"{{commentuser}}\"}"
