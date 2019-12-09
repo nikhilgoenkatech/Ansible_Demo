@@ -7,15 +7,11 @@
     now: "{{ ansible_date_time.epoch|int * 1000}}"
     past: "{{ now|int - 86400000 }}" # 1h = 3600000   24h = 86400000
     commentuser: "Ansible Playbook"
-    dtcommentapiurl: "{{tenanturl}}/api/v1/problem/details/{{ProblemID}}/comments?Api-Token={{apitoken}}"
-    dtdeploymentapiurl: "{{tenanturl}}/api/v1/events/?eventType=CUSTOM_DEPLOYMENT&from={{past}}&to={{now}}&Api-Token={{apitoken}}"
     payload:
       PID: "{{ProblemID}}"
       ImpactedEntities: "{{impactedEntities}}"
   tasks:
     - name: push comment to dynatrace
-      uri:
-        url: "{{tenanturl}}/api/v1/problem/details/{{ProblemID}}/comments?Api-Token={{apitoken}}"
-        method: POST
-        body_format: json
-        body: "{ \"comment\": \"Remediation playbook started.\", \"user\": \"{{commentuser}}\"}"
+      debug:
+       msg: Problem ID is {{ProblemID}}
+      
