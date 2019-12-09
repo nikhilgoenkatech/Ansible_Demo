@@ -1,3 +1,4 @@
+---
 - name: Trying
   hosts: all
   vars:
