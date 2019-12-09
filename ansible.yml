@@ -8,10 +8,10 @@
     past: "{{ now|int - 86400000 }}" # 1h = 3600000   24h = 86400000
     commentuser: "Ansible Playbook"
     payload:
-     #PID: "{{ProblemID}}"
+     ProblemID: "{{ProblemID}}"
      ImpactedEntities: "{{impactedEntities}}"
   tasks:
     - name: push comment to dynatrace
       debug:
-       msg: Problem ID is {{PID}}
+       msg: Problem ID is {{ProblemID}}
       
