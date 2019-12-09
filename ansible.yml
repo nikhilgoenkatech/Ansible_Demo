@@ -19,7 +19,7 @@
         method: POST
         body_format: json
         body: "{ \"comment\": \"Remediation playbook started.\", \"user\": \"{{commentuser}}\", \"context\": \"Ansible Tower\" }"
-      when: state == "OPEN"
+      
     - name: fetch custom deployment events
       uri:
         url: "{{dtdeploymentapiurl}}"
@@ -36,8 +36,3 @@
         deployment_events: "{{item.json.events}}"
       with_items: "{{ customproperties.results }}"
       register: app_result
-
-    - name: get most recent deployment
-      when: state == "OPEN"
-      set_fact:
-        myItem: "{{ deployment_events | first }}"
