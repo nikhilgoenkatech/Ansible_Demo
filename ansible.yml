@@ -11,4 +11,42 @@
     service:
        name: oneagent
        state: started
-       
+  vars:
+    #tenanturl: https://s.live.dynatrace.com
+    #apitoken: xxx
+    now: "{{ ansible_date_time.epoch|int * 1000}}"
+    past: "{{ now|int - 86400000 }}" # 1h = 3600000   24h = 86400000
+    #commentuser: "Ansible Playbook"
+    #dtcommentapiurl: "{{tenanturl}}/api/v1/problem/details/{{pid}}/comments?Api-Token={{apitoken}}"
+    #dtdeploymentapiurl: "{{tenanturl}}/api/v1/events/?eventType=CUSTOM_DEPLOYMENT&from={{past}}&to={{now}}&Api-Token={{apitoken}}"
+    payload:
+      #PID: "{{pid}}"
+      #ImpactedEntities: "{{impactedEntities}}"
+    - name: push comment to dynatrace
+      uri:
+        url: "{{dtcommentapiurl}}"
+        method: POST
+        body_format: json
+        body: "{ \"comment\": \"Remediation playbook started.\", \"user\": \"{{commentuser}}\", \"context\": \"Ansible Tower\" }"
+      when: state == "OPEN"
+    - name: fetch custom deployment events
+      uri:
+        url: "{{dtdeploymentapiurl}}"
+        return_content: yes
+      with_items: "{{ impactedEntities }}"
+      when: state == "OPEN"
+      register: customproperties
+      ignore_errors: no
+      #State: "{{state}}"
+
+    - name: parse deployment events
+      when: state == "OPEN"
+      set_fact:
+        deployment_events: "{{item.json.events}}"
+      with_items: "{{ customproperties.results }}"
+      register: app_result
+
+    - name: get most recent deployment
+      when: state == "OPEN"
+      set_fact:
+        myItem: "{{ deployment_events | first }}"
