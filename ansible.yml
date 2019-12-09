@@ -2,8 +2,6 @@
 - name: Trying
   hosts: all
   vars:
-    tenanturl: https://stg99002.live.dynatrace.com
-    apitoken:  Ur8ti8_9SLWYpfXSTDNgH
     now: "{{ ansible_date_time.epoch|int * 1000}}"
     past: "{{ now|int - 86400000 }}" # 1h = 3600000   24h = 86400000
     commentuser: "Ansible Playbook"
