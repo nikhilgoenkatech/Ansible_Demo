@@ -10,8 +10,8 @@
     #dtcommentapiurl: "{{tenanturl}}/api/v1/problem/details/{{pid}}/comments?Api-Token={{apitoken}}"
     #dtdeploymentapiurl: "{{tenanturl}}/api/v1/events/?eventType=CUSTOM_DEPLOYMENT&from={{past}}&to={{now}}&Api-Token={{apitoken}}"
     payload:
-      #PID: "{{pid}}"
-      #ImpactedEntities: "{{impactedEntities}}"
+      PID: "{{pid}}"
+      ImpactedEntities: "{{impactedEntities}}"
   tasks:
     - name: push comment to dynatrace
       uri:
