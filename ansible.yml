@@ -5,6 +5,7 @@
     now: "{{ ansible_date_time.epoch|int * 1000}}"
     past: "{{ now|int - 86400000 }}" # 1h = 3600000   24h = 86400000
     commentuser: "Ansible Playbook"
+    result: "200"
     payload:
      ProblemID: "{{ProblemID}}"
      ImpactedEntities: "{{impactedEntities}}"
@@ -27,7 +28,8 @@
       with_items: "{{ impactedEntities }}"
       when: state == "OPEN"
       register: customproperties
-      ignore_errors: no  
+      ignore_errors: no
+      
     - name: parse deployment events
       when: state == "OPEN"
       set_fact:
@@ -35,20 +37,23 @@
       with_items: "{{ customproperties.results }}"
       register: app_result
 
-    - name: get most recent deployment
-      when: state == "OPEN"
-      set_fact:
-        myItem: "{{ deployment_events | first }}"
-
     # Call remediation action
-     
+    # read the status of the remedy
+    
+    - name: Initiating the remedy action
+      command: /bin/systemctl status sshd.service
+      register: my_service_status
+    
+    - debug:
+        msg: "{ (my_service_status.rc == 0) | ternary('Up', 'Down') }}"
+        
     - name: push success comment to dynatrace
       uri:
         url: "{{dtcommentapiurl}}"
         method: POST
         body_format: json
         body: "{ \"comment\": \"Invoked remediation action successfully executed.\", \"user\": \"{{commentuser}}\", \"context\": \"Ansible Tower\" }"
-      when: state == "OPEN" and (result.status == 200 or result.status == 201 or result.status == 202)
+      when: state == "OPEN" and (result == 200 or result == 201 or result == 202)
 
     - name: push error comment to dynatrace
       uri:
@@ -56,4 +61,4 @@
         method: POST
         body_format: json
         body: "{ \"comment\": \"Invoked remediation action failed. \", \"user\": \"{{commentuser}}\", \"context\": \"Ansible Tower\" }"
-      when: state == "OPEN" and (result.status != 200 and result.status != 201 and result.status != 202)
+      when: state == "OPEN" and (result != 200 and result != 201 and result != 202)
