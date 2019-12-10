@@ -28,3 +28,32 @@
       when: state == "OPEN"
       register: customproperties
       ignore_errors: no  
+    - name: parse deployment events
+      when: state == "OPEN"
+      set_fact:
+        deployment_events: "{{item.json.events}}"
+      with_items: "{{ customproperties.results }}"
+      register: app_result
+
+    - name: get most recent deployment
+      when: state == "OPEN"
+      set_fact:
+        myItem: "{{ deployment_events | first }}"
+
+    # Call remediation action
+     
+    - name: push success comment to dynatrace
+      uri:
+        url: "{{dtcommentapiurl}}"
+        method: POST
+        body_format: json
+        body: "{ \"comment\": \"Invoked remediation action successfully executed.\", \"user\": \"{{commentuser}}\", \"context\": \"Ansible Tower\" }"
+      when: state == "OPEN" and (result.status == 200 or result.status == 201 or result.status == 202)
+
+    - name: push error comment to dynatrace
+      uri:
+        url: "{{dtcommentapiurl}}"
+        method: POST
+        body_format: json
+        body: "{ \"comment\": \"Invoked remediation action failed. \", \"user\": \"{{commentuser}}\", \"context\": \"Ansible Tower\" }"
+      when: state == "OPEN" and (result.status != 200 and result.status != 201 and result.status != 202)
