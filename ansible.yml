@@ -10,33 +10,6 @@
      ProblemID: "{{ProblemID}}"
      ImpactedEntities: "{{impactedEntities}}"
   tasks:
-    - name: push comment to dynatrace
-      debug:
-       msg: "{{problemId}}"
-
-    - name: push comment to dynatrace
-      uri:
-        url: "{{dtcommentapiurl}}"
-        method: POST
-        body_format: json
-        body: "{ \"comment\": \"Remediation playbook started.\", \"user\": \"{{commentuser}}\", \"context\": \"Ansible Tower\" }"
-
-    - name: fetch custom deployment events
-      uri:
-        url: "{{dtdeploymentapiurl}}"
-        return_content: yes
-      with_items: "{{ impactedEntities }}"
-      when: state == "OPEN"
-      register: customproperties
-      ignore_errors: no
-      
-    - name: parse deployment events
-      when: state == "OPEN"
-      set_fact:
-        deployment_events: "{{item.json.events}}"
-      with_items: "{{ customproperties.results }}"
-      register: app_result
-
     # Call remediation action
     # read the status of the remedy
     
@@ -45,20 +18,4 @@
       register: my_service_status
     
     - debug:
-        msg: "{ (my_service_status.rc == 0) | ternary('Up', 'Down') }}"
-        
-    - name: push success comment to dynatrace
-      uri:
-        url: "{{dtcommentapiurl}}"
-        method: POST
-        body_format: json
-        body: "{ \"comment\": \"Invoked remediation action successfully executed.\", \"user\": \"{{commentuser}}\", \"context\": \"Ansible Tower\" }"
-      when: state == "OPEN" and (result == 200 or result == 201 or result == 202)
-
-    - name: push error comment to dynatrace
-      uri:
-        url: "{{dtcommentapiurl}}"
-        method: POST
-        body_format: json
-        body: "{ \"comment\": \"Invoked remediation action failed. \", \"user\": \"{{commentuser}}\", \"context\": \"Ansible Tower\" }"
-      when: state == "OPEN" and (result != 200 and result != 201 and result != 202)
+        msg: "{ (my_service_status.rc == 0) | ternary('Active', 'Down') }}"
