@@ -12,4 +12,20 @@
     - name: push comment to dynatrace
       debug:
        msg: "{{problemId}}"
+    
+    - name: push comment to dynatrace
+      uri:
+        url: "{{dtcommentapiurl}}"
+        method: POST
+        body_format: json
+        body: "{ \"comment\": \"Remediation playbook started.\", \"user\": \"{{commentuser}}\", \"context\": \"Ansible Tower\" }"
+      when: state == "OPEN"
       
+    - name: fetch custom deployment events
+      uri:
+        url: "{{dtdeploymentapiurl}}"
+        return_content: yes
+      with_items: "{{ impactedEntities }}"
+      when: state == "OPEN"
+      register: customproperties
+      ignore_errors: no  
