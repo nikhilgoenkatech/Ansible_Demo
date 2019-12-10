@@ -61,4 +61,4 @@
         method: POST
         body_format: json
         body: "{ \"comment\": \"Invoked remediation action failed. \", \"user\": \"{{commentuser}}\", \"context\": \"Ansible Tower\" }"
-      when: state == "OPEN" and result.rc != 'Active'
+      when: state == "OPEN" and result.rc == 'Active'
