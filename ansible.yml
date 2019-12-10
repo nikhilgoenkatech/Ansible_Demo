@@ -18,4 +18,4 @@
       register: my_service_status
     
     - debug:
-        msg: "{ (my_service_status.rc == 0) | ternary('Active', 'Down') }}"
+        msg: "{{ (my_service_status.rc == 0) | ternary('Active', 'Down') }}"
