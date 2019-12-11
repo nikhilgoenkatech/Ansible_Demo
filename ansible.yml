@@ -39,9 +39,11 @@
 
     # Call remediation action
     # read the status of the remedy
-    
     - name: Initiating the remedy action
-      command: /bin/systemctl status sshd.service
+      command: /bin/systemctl start MyApp.service
+      
+    - name: Checking if the remediation was succesfull and service has restarted
+      command: /bin/systemctl status MyApp.service
       register: result
     
     - debug:
