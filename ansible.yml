@@ -43,7 +43,7 @@
       command: /bin/systemctl start MyApp.service
       
     - name: Checking if the remediation was succesfull and service has restarted
-      command: service status MyApp.service
+      command: service MyApp.service status
       register: result
     
     - debug:
